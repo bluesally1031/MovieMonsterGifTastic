@@ -6,12 +6,10 @@
     <title>Monster Gif-triever</title>
 
     <!-- Font Awesome (CSS) -->
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- Bootstrap (CSS) -->
-    <link rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
 
 </head>
 
@@ -29,64 +27,47 @@
         <!-- Search box/User input -->
         <form role="monster-form">
             <label for="monster-input">Add a Movie Monster</label>
-            <input type="text" id="monster-input"><br>
+            <input type="text" id="monster-input">
+            <br>
             <!-- Button to add new monster -->
-            <input id="#add-monster" type="submit" value="Add a Movie Monster">
+            <input id="add-monster" type="submit" value="Add a Movie Monster">
         </form>
 
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    //Initial array of monsters
-        var monsterTopics = ["Frankenstein's Monster", "Dracula", "mummy", "zombie", "wolfman"];
-    
-        function renderButtons(){
-            $("#monster-view").empty();
-            for (var i = 0; i < monsterTopics.length; i++){
-                var a = $("<button>");
-                a.addClass("monster");
-                a.attr("data-name", monsterTopics[i]);
-                a.attr(monsterTopics[i]);
-                $("#buttons").append(a);    
-            }
-        $("#add-monster").on("click", function(event){
-            event.preventDefault();
-            var monster = $("#monster-input").val().trim();
-            monsterTopics.push(monster);
-            renderButtons();
-});
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            //Initial array of monsters
+            var monsterTopics = ["Frankenstein's Monster", "Dracula", "mummy", "zombie", "wolfman"];
 
-renderButtons();
-}
-    </script>
-    
+            function renderButtons() {
+                $("#buttons-view").empty();
+                for (var i = 0; i < monsterTopics.length; i++) {
+                    var a = $("<button>");
+                    a.addClass("monster");
+                    a.attr("data-name", monsterTopics[i]);
+                    a.text(monsterTopics[i]);
+                    $("#buttons-view").append(a);
+                }                
+            }
+
+            $("#add-monster").on("click", function (event) {
+                event.preventDefault();
+                var monster = $("#monster-input").val().trim();
+                monsterTopics.push(monster);
+                renderButtons();
+            });
+            
+            renderButtons();
+        </script>
+
 </body>
 
 </html>
-//Loop through prepop array and create buttons
-    for (var i = 0; i < monsterTopics.length; i++){
-        var monsterBtn = $("<button>")
-        .attr("data-monster", monsterTopics[i])
-        .text(monsterTopics[i])
-        .appendTo("#buttons");
-    //Button click event to call gifs from API using search term
-    $("button").on("click", function(){
-    var x = $(this).data("monster");
-    //queryURL for Giphy API
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit=10&rating=R";
-    }
-    
-// //MAIN OPERATIONS
-//     var createGifBtns = function(data) {
-//         var newBtn = $("#buttons");
-//     }
-
-
-// function buildQueryURL(){
-//     //URL to query API
-//     var queryURL = "https://api.giphy.com/v1/gifs/search.json?";
-    
-//     //Object to contain API call's query parameters
+<!-- //Loop through prepop array and create buttons for (var i = 0; i < monsterTopics.length; i++){ var monsterBtn=$ (
+    "<button>") .attr( "data-monster", monsterTopics[i]) .text(monsterTopics[i]) .appendTo( "#buttons"); //Button click event to call
+    gifs from API using search term $( "button").on( "click", function(){ var x=$ (this).data( "monster"); //queryURL for Giphy
+    API var queryURL="https://api.giphy.com/v1/gifs/search?q=" + x +
+    "&api_key=fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit=10&rating=R"; } // //MAIN OPERATIONS // var createGifBtns=f unction(data) { // var newBtn=$ ( "#buttons"); // } // function buildQueryURL(){
+// //URL to query API // var queryURL="https://api.giphy.com/v1/gifs/search.json?" ; // //Object to contain API call 's query parameters
 //     //Set API key
 //     var queryParams = { "api-key": "fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit10&rating=R"};
 
@@ -124,7 +105,7 @@ renderButtons();
 //                 //Rating of gif
 //                 var p = $("<p>").text("Rating: " + response.data[i].rating);
 //                 //Create monsterImage var
-//                 var monsterImage = $("<img class='gif'>");
+//                 var monsterImage = $("<img class='gif '>");
 //                 //Animated gif from loop
 //                 monsterImage.attr("data-animate", response.data[i].images.fixed_height.url);
 //                 //Still gif from loop
@@ -154,4 +135,4 @@ renderButtons();
 //     }
 
 //     $(this).attr("src", src);
-// });
+// }); -->
