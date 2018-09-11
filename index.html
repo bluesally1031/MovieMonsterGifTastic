@@ -35,9 +35,11 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
+            
             //Initial array of monsters
             var monsterTopics = ["Frankenstein's Monster", "Dracula", "mummy", "zombie", "wolfman"];
-
+            
+            //Create buttons for items in array
             function renderButtons() {
                 $("#buttons-view").empty();
                 for (var i = 0; i < monsterTopics.length; i++) {
@@ -48,91 +50,84 @@
                     $("#buttons-view").append(a);
                 }                
             }
-
+            //Push user search term into array
             $("#add-monster").on("click", function (event) {
                 event.preventDefault();
-                var monster = $("#monster-input").val().trim();
-                monsterTopics.push(monster);
+                var userMonsterSearch = $("#monster-input").val().trim();
+                monsterTopics.push(userMonsterSearch);
                 renderButtons();
             });
-            
             renderButtons();
+            
+            $("button").on("click", function(){
+                monsterTopics = $(this).attr("data-monster");
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + monsterTopics + "&api_key=fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit=10&rating=R";
+
+                $.ajax({url: queryURL, method: "GET"})
+                .then(function(response){
+                    console.log(response);
+                    for (var i = 0; i < response.data.length; i++) {
+                        
+                        var monsterDiv = $("<div>");
+                            monsterDiv.append(p);
+                            monsterDiv.append(monsterImage);
+      
+                        $("#gif-container").append(monsterDiv);
+                        
+                        var p = $("<p>").text("Rating: " + response.data[i].rating);
+                        
+                        var monsterImage = $("<img class='gif '>");
+                        monsterImage.attr("data-animate", response.data[i].images.fixed_height.url);monsterImage.attr("data-still", response.data[i].images.fixed_height_still.url);
+                        monsterImage.attr("src", response.data[i].images.fixed_height_still.url);
+                    }
+                })
+
+                }) 
+            
+    //EVERYTHING WORKS ABOVE THIS LINE _________________________________________________
+
+            // //AJAX call to Giphy API
+            // $.ajax({url: queryURL, method: "GET"}).done(function(response) {
+            //     console.log(response);
+            //     for(var i=0; i < response.data.length; i++){
+            //     //Create monsterDiv var
+            //         var monsterDiv = $("<div>");
+            //         //Rating of gif
+            //         var p = $("<p>").text("Rating: " + response.data[i].rating);
+            //         //Create monsterImage var
+            //         var monsterImage = $("<img class='gif '>");
+            //         //Animated gif from loop
+            //         monsterImage.attr("data-animate", response.data[i].images.fixed_height.url);
+            //         //Still gif from loop
+            //         monsterImage.attr("data-still", response.data[i].images.fixed_height_still.url);
+            //         //Gif first appears still
+            //         monsterImage.attr("src", response.data[i].images.fixed_height_still.url);
+            //         //Add rating
+            //         monsterDiv.append(p);
+            //         //Add gifs to monster search term
+            //         monsterDiv.append(monsterImage);
+            //         //Add gifs to page container
+            //         $("#gif-container").append(monsterDiv);
+            //     };
+            // }
+
+        // //On click event for animating or stilling gifs
+        //     $("#gif-container").on("click", ".gif", function() {
+        //         var still = $(this).attr("data-still");
+        //         var src = $(this).attr("src");
+
+        //         if (src === still) {
+        //             src = $(this).attr("data-animate");
+        //         } 
+        //         else {
+        //             src = still;
+        //         }
+
+        //         $(this).attr("src", src);
+        //     };
+
         </script>
 
 </body>
 
 </html>
-<!-- //Loop through prepop array and create buttons for (var i = 0; i < monsterTopics.length; i++){ var monsterBtn=$ (
-    "<button>") .attr( "data-monster", monsterTopics[i]) .text(monsterTopics[i]) .appendTo( "#buttons"); //Button click event to call
-    gifs from API using search term $( "button").on( "click", function(){ var x=$ (this).data( "monster"); //queryURL for Giphy
-    API var queryURL="https://api.giphy.com/v1/gifs/search?q=" + x +
-    "&api_key=fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit=10&rating=R"; } // //MAIN OPERATIONS // var createGifBtns=f unction(data) { // var newBtn=$ ( "#buttons"); // } // function buildQueryURL(){
-// //URL to query API // var queryURL="https://api.giphy.com/v1/gifs/search.json?" ; // //Object to contain API call 's query parameters
-//     //Set API key
-//     var queryParams = { "api-key": "fOnwNeRG7PRTAUP9p866NrJ9DdbdjmEK&limit10&rating=R"};
-
-//     //User search term & add to queryParams object
-//     queryParams.q = $("#search-term")
-//         .val()
-//         .trim();
-    
-// function userSearchTermBtn(GiphyData){
-//     for (var i = 0; i < monsterTopics; i++){
-//         var returnedGifs =                      GiphyData.response.images[i];
-//         var gifCount = i + 1;
-//         var $gifBtns = $("<ul>");
-//         $gifBtns.addClass("button-group");
-//         $("#buttons").append($gifBtns);
-//     };
-// }
-
-
-// }
- 
-
-// //     queryURL.q = $("#search-term")
-// //         .val()
-// //         .trim();
-
-
-//     //AJAX call to Giphy API
-//     $.ajax({url: queryURL, method: "GET"})
-//         .done(function(response) {
-//             console.log(response);
-//             for(var i=0; i < response.data.length; i++){
-//                 //Create monsterDiv var
-//                 var monsterDiv = $("<div>");
-//                 //Rating of gif
-//                 var p = $("<p>").text("Rating: " + response.data[i].rating);
-//                 //Create monsterImage var
-//                 var monsterImage = $("<img class='gif '>");
-//                 //Animated gif from loop
-//                 monsterImage.attr("data-animate", response.data[i].images.fixed_height.url);
-//                 //Still gif from loop
-//                 monsterImage.attr("data-still", response.data[i].images.fixed_height_still.url);
-//                 //Gif first appears still
-//                 monsterImage.attr("src", response.data[i].images.fixed_height_still.url);
-//                 //Add rating
-//                 monsterDiv.append(p);
-//                 //Add gifs to monster search term
-//                 monsterDiv.append(monsterImage);
-//                 //Add gifs to page container
-//                 $("#gif-container").append(monsterDiv);
-//             }
-//     })
-// // });
-
-// //On click event for animating or stilling gifs
-// $("#gif-container").on("click", ".gif", function() {
-//     var still = $(this).attr("data-still");
-//     var src = $(this).attr("src");
-
-//     if (src === still) {
-//         src = $(this).attr("data-animate");
-//     } 
-//     else {
-//         src = still;
-//     }
-
-//     $(this).attr("src", src);
-// }); -->
